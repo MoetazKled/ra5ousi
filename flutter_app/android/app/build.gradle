@@ -4,6 +4,13 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// Define flutter extension properties for plugins that need them
+ext {
+    flutterCompileSdkVersion = 34
+    flutterTargetSdkVersion = 34
+    flutterMinSdkVersion = 21
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
