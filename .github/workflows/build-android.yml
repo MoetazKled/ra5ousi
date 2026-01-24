@@ -5,7 +5,7 @@ on:
     branches: [ cursor/sch-ma-et-interface-carte-bbc3, main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Permet de lancer manuellement
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,14 +18,15 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
       
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.27.1'
           channel: 'stable'
+          cache: true
       
       - name: Get dependencies
         working-directory: flutter_app
@@ -35,18 +36,8 @@ jobs:
         working-directory: flutter_app
         run: flutter build apk --debug
       
-      - name: Build APK (Release)
-        working-directory: flutter_app
-        run: flutter build apk --release
-      
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
           path: flutter_app/build/app/outputs/flutter-apk/app-debug.apk
-      
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
