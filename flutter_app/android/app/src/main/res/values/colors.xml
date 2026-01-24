@@ -2,4 +2,5 @@
 <resources>
     <color name="primary_color">#E63946</color>
     <color name="white">#FFFFFF</color>
+    <color name="ic_launcher_background">#E63946</color>
 </resources>

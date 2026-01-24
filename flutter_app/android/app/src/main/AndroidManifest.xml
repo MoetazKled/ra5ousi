@@ -12,7 +12,7 @@
     <application
         android:label="PriceMap Tunisia"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher_simple"
         android:usesCleartextTraffic="true">
         
         <!-- Google Maps API Key -->
