@@ -359,43 +359,10 @@ class ProfilePage extends ConsumerWidget {
                 title: 'À propos',
                 onTap: () {},
               ),
-              const Divider(height: 1),
-              _SettingsTile(
-                icon: Icons.logout,
-                title: 'Déconnexion',
-                onTap: () => _showLogoutDialog(context, ref),
-                isDestructive: true,
-              ),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Déconnexion'),
-        content: const Text('Voulez-vous vraiment vous déconnecter ?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler'),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              await ref.read(authProvider.notifier).signOut();
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: AppTheme.priceRed,
-            ),
-            child: const Text('Déconnexion'),
-          ),
-        ],
-      ),
     );
   }
 }

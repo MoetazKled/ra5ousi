@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -533,11 +535,10 @@ class SupabaseService {
   // ============================================================================
 
   /// Upload une photo de prix.
-  Future<String> uploadPricePhoto(String filePath, String fileName) async {
+  Future<String> uploadPricePhoto(Uint8List bytes, String fileName) async {
     final user = currentUser;
     if (user == null) throw Exception('Utilisateur non connecté');
 
-    final bytes = await _readFileBytes(filePath);
     final path = 'price_photos/${user.id}/${DateTime.now().millisecondsSinceEpoch}_$fileName';
 
     await _client.storage.from('price-photos').uploadBinary(
@@ -550,11 +551,10 @@ class SupabaseService {
   }
 
   /// Upload un avatar utilisateur.
-  Future<String> uploadAvatar(String filePath, String fileName) async {
+  Future<String> uploadAvatar(Uint8List bytes, String fileName) async {
     final user = currentUser;
     if (user == null) throw Exception('Utilisateur non connecté');
 
-    final bytes = await _readFileBytes(filePath);
     final path = 'avatars/${user.id}/$fileName';
 
     await _client.storage.from('avatars').uploadBinary(
@@ -569,10 +569,5 @@ class SupabaseService {
     await updateUserProfile(avatarUrl: url);
 
     return url;
-  }
-
-  Future<List<int>> _readFileBytes(String filePath) async {
-    // Cette méthode sera implémentée avec dart:io ou image_picker
-    throw UnimplementedError('Implement file reading');
   }
 }

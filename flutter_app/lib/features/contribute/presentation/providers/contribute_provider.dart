@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/models/product.dart';
@@ -215,6 +216,3 @@ class ContributeNotifier extends StateNotifier<ContributeState> {
     );
   }
 }
-
-// Import manquant pour LatLng
-import 'package:google_maps_flutter/google_maps_flutter.dart';

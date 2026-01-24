@@ -79,7 +79,7 @@ class CategoryChipsWidget extends ConsumerWidget {
       case 'bakery_dining':
         return Icons.bakery_dining_rounded;
       case 'nutrition':
-        return Icons.nutrition_rounded;
+        return Icons.eco_rounded;
       case 'store':
         return Icons.store_rounded;
       case 'miscellaneous_services':
