@@ -24,16 +24,16 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.pricemap.tunisia"
-    compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    compileSdk 34
+    ndkVersion "25.1.8937393"
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -42,8 +42,8 @@ android {
 
     defaultConfig {
         applicationId "com.pricemap.tunisia"
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdk 21
+        targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -51,8 +51,6 @@ android {
 
     buildTypes {
         release {
-            // Pour le debug, on désactive la signature
-            // En production, configurez votre keystore
             signingConfig signingConfigs.debug
             minifyEnabled false
             shrinkResources false
@@ -68,7 +66,6 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 }
