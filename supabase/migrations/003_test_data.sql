@@ -1,144 +1,487 @@
 -- ============================================================================
--- PriceMap Tunisia - Données de Test (Tunis)
--- Commerces et prix fictifs pour démonstration
+-- PriceMap Tunisia - JEU DE DONNÉES COMPLET (Grand Tunis)
+-- 100+ commerces et 200+ prix pour démonstration
 -- ============================================================================
 
--- ============================================================================
--- COMMERCES DE TEST (TUNIS)
--- ============================================================================
-
--- Boucheries
-INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
-    ('55555555-0000-0000-0000-000000000001', 'Boucherie El Baraka', 'جزارة البركة', '22222222-0000-0000-0000-000000000002', 
-     ST_SetSRID(ST_MakePoint(10.1815, 36.8065), 4326)::geography, '15 Avenue Habib Bourguiba', 'Tunis', 'Tunis', '+216 71 123 456', true, true),
-    
-    ('55555555-0000-0000-0000-000000000002', 'Boucherie Essalem', 'جزارة السلام', '22222222-0000-0000-0000-000000000002',
-     ST_SetSRID(ST_MakePoint(10.1750, 36.8100), 4326)::geography, '23 Rue de Marseille', 'Tunis', 'Tunis', '+216 71 234 567', false, true),
-    
-    ('55555555-0000-0000-0000-000000000003', 'Boucherie Ben Ali', 'جزارة بن علي', '22222222-0000-0000-0000-000000000002',
-     ST_SetSRID(ST_MakePoint(10.1880, 36.8030), 4326)::geography, '8 Avenue de la Liberté', 'Tunis', 'Tunis', '+216 71 345 678', true, true),
-
--- Boulangeries
-    ('55555555-0000-0000-0000-000000000010', 'Boulangerie Le Croissant', 'مخبزة الكرواسون', '22222222-0000-0000-0000-000000000005',
-     ST_SetSRID(ST_MakePoint(10.1790, 36.8080), 4326)::geography, '5 Rue de Rome', 'Tunis', 'Tunis', '+216 71 456 789', true, true),
-    
-    ('55555555-0000-0000-0000-000000000011', 'Boulangerie Essabah', 'مخبزة الصباح', '22222222-0000-0000-0000-000000000005',
-     ST_SetSRID(ST_MakePoint(10.1830, 36.8045), 4326)::geography, '12 Avenue de Paris', 'Tunis', 'Tunis', '+216 71 567 890', false, true),
-
--- Épiceries
-    ('55555555-0000-0000-0000-000000000020', 'Épicerie Chez Mohamed', 'بقالة عند محمد', '22222222-0000-0000-0000-000000000004',
-     ST_SetSRID(ST_MakePoint(10.1800, 36.8055), 4326)::geography, '18 Rue Ibn Khaldoun', 'Tunis', 'Tunis', '+216 71 678 901', false, true),
-    
-    ('55555555-0000-0000-0000-000000000021', 'Superette El Manar', 'سوبريت المنار', '22222222-0000-0000-0000-000000000004',
-     ST_SetSRID(ST_MakePoint(10.1760, 36.8090), 4326)::geography, '25 Avenue Farhat Hached', 'Tunis', 'Tunis', '+216 71 789 012', true, true),
-
--- Primeurs
-    ('55555555-0000-0000-0000-000000000030', 'Primeur Fruits du Soleil', 'خضر وفواكه الشمس', '22222222-0000-0000-0000-000000000006',
-     ST_SetSRID(ST_MakePoint(10.1840, 36.8070), 4326)::geography, '3 Marché Central', 'Tunis', 'Tunis', '+216 71 890 123', false, true),
-
--- Coiffeurs
-    ('55555555-0000-0000-0000-000000000040', 'Salon Élégance', 'صالون الأناقة', '22222222-0000-0000-0000-000000000011',
-     ST_SetSRID(ST_MakePoint(10.1770, 36.8060), 4326)::geography, '7 Rue de Hollande', 'Tunis', 'Tunis', '+216 71 901 234', true, true),
-    
-    ('55555555-0000-0000-0000-000000000041', 'Coiffeur Le Style', 'حلاق الستايل', '22222222-0000-0000-0000-000000000011',
-     ST_SetSRID(ST_MakePoint(10.1820, 36.8095), 4326)::geography, '14 Avenue de Carthage', 'Tunis', 'Tunis', '+216 71 012 345', false, true),
-
--- Quincailleries
-    ('55555555-0000-0000-0000-000000000050', 'Quincaillerie Générale', 'خردوات عامة', '22222222-0000-0000-0000-000000000021',
-     ST_SetSRID(ST_MakePoint(10.1850, 36.8040), 4326)::geography, '20 Rue Mongi Slim', 'Tunis', 'Tunis', '+216 71 123 456', true, true);
-
--- ============================================================================
--- PRODUITS SUPPLÉMENTAIRES
--- ============================================================================
-
--- Pain
-INSERT INTO products (id, parent_id, name_fr, name_ar, slug, category_id, unit_id, aliases) VALUES
-    ('44444444-0000-0000-0000-000000000070', NULL, 'Pain', 'خبز', 'pain', '22222222-0000-0000-0000-000000000005', '11111111-0000-0000-0000-000000000006',
-     '{"fr": ["baguette", "pain de mie"], "ar": ["خبز"], "dialect": ["khobz"]}'::jsonb),
-    ('44444444-0000-0000-0000-000000000071', '44444444-0000-0000-0000-000000000070', 'Baguette', 'باقيت', 'baguette', '22222222-0000-0000-0000-000000000005', '11111111-0000-0000-0000-000000000006',
-     '{"fr": ["baguette française"], "ar": ["باقيت"], "dialect": []}'::jsonb),
-    ('44444444-0000-0000-0000-000000000072', '44444444-0000-0000-0000-000000000070', 'Pain tabouna', 'طابونة', 'pain-tabouna', '22222222-0000-0000-0000-000000000005', '11111111-0000-0000-0000-000000000006',
-     '{"fr": ["tabouna", "pain traditionnel"], "ar": ["طابونة"], "dialect": ["tabouna"]}'::jsonb);
+-- Nettoyer les anciennes données de test (si existantes)
+DELETE FROM price_reports WHERE user_id = '66666666-0000-0000-0000-000000000001';
+DELETE FROM vendors WHERE id LIKE '55555555-%';
+DELETE FROM users WHERE id = '66666666-0000-0000-0000-000000000001';
+DELETE FROM products WHERE id IN (
+    '44444444-0000-0000-0000-000000000070',
+    '44444444-0000-0000-0000-000000000071',
+    '44444444-0000-0000-0000-000000000072'
+);
 
 -- ============================================================================
 -- UTILISATEUR DE TEST
 -- ============================================================================
 
 INSERT INTO users (id, email, display_name, role, points, level) VALUES
-    ('66666666-0000-0000-0000-000000000001', 'test@pricemap.tn', 'Utilisateur Test', 'user', 100, 2);
+    ('66666666-0000-0000-0000-000000000001', 'test@pricemap.tn', 'Contributeur Test', 'user', 500, 5);
 
 -- ============================================================================
--- PRIX DE TEST
+-- PRODUITS SUPPLÉMENTAIRES
 -- ============================================================================
 
--- Prix Viande de bœuf
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    -- Boucherie El Baraka - Moins cher
-    ('77777777-0000-0000-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0000-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001',
-     28.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 15, true, true, NOW() + INTERVAL '30 days'),
-    -- Boucherie Essalem - Moyen
-    ('77777777-0000-0000-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0000-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001',
-     32.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.70, 8, false, true, NOW() + INTERVAL '30 days'),
-    -- Boucherie Ben Ali - Plus cher
-    ('77777777-0000-0000-0000-000000000003', '44444444-0000-0000-0000-000000000001', '55555555-0000-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001',
-     35.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.90, 20, true, true, NOW() + INTERVAL '30 days');
+INSERT INTO products (id, parent_id, name_fr, name_ar, slug, category_id, unit_id, aliases) VALUES
+    -- Pain
+    ('44444444-0000-0000-0000-000000000070', NULL, 'Pain', 'خبز', 'pain', '22222222-0000-0000-0000-000000000005', '11111111-0000-0000-0000-000000000006',
+     '{"fr": ["baguette", "pain de mie"], "ar": ["خبز"], "dialect": ["khobz"]}'::jsonb),
+    ('44444444-0000-0000-0000-000000000071', '44444444-0000-0000-0000-000000000070', 'Baguette', 'باقيت', 'baguette', '22222222-0000-0000-0000-000000000005', '11111111-0000-0000-0000-000000000006',
+     '{"fr": ["baguette française"], "ar": ["باقيت"], "dialect": []}'::jsonb),
+    ('44444444-0000-0000-0000-000000000072', '44444444-0000-0000-0000-000000000070', 'Pain tabouna', 'طابونة', 'pain-tabouna', '22222222-0000-0000-0000-000000000005', '11111111-0000-0000-0000-000000000006',
+     '{"fr": ["tabouna", "pain traditionnel"], "ar": ["طابونة"], "dialect": ["tabouna"]}'::jsonb)
+ON CONFLICT (id) DO NOTHING;
 
--- Prix Poulet
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000010', '44444444-0000-0000-0000-000000000020', '55555555-0000-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001',
-     12.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.80, 12, true, true, NOW() + INTERVAL '30 days'),
-    ('77777777-0000-0000-0000-000000000011', '44444444-0000-0000-0000-000000000020', '55555555-0000-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001',
-     13.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.65, 5, false, true, NOW() + INTERVAL '30 days');
+-- ============================================================================
+-- COMMERCES - TUNIS CENTRE (Avenue Habib Bourguiba & environs)
+-- ============================================================================
 
--- Prix Pain
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000020', '44444444-0000-0000-0000-000000000070', '55555555-0000-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001',
-     0.350, '11111111-0000-0000-0000-000000000006', 'TND', 0.90, 25, true, true, NOW() + INTERVAL '30 days'),
-    ('77777777-0000-0000-0000-000000000021', '44444444-0000-0000-0000-000000000070', '55555555-0000-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001',
-     0.400, '11111111-0000-0000-0000-000000000006', 'TND', 0.75, 10, false, true, NOW() + INTERVAL '30 days');
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    -- Boucheries Tunis Centre
+    ('55555555-0001-0000-0000-000000000001', 'Boucherie El Baraka', 'جزارة البركة', '22222222-0000-0000-0000-000000000002', 
+     ST_SetSRID(ST_MakePoint(10.1815, 36.8065), 4326)::geography, '15 Avenue Habib Bourguiba', 'Tunis', 'Tunis', '+216 71 123 001', true, true),
+    ('55555555-0001-0000-0000-000000000002', 'Boucherie Essalem', 'جزارة السلام', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1750, 36.8100), 4326)::geography, '23 Rue de Marseille', 'Tunis', 'Tunis', '+216 71 123 002', false, true),
+    ('55555555-0001-0000-0000-000000000003', 'Boucherie Ben Ali', 'جزارة بن علي', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1880, 36.8030), 4326)::geography, '8 Avenue de la Liberté', 'Tunis', 'Tunis', '+216 71 123 003', true, true),
+    ('55555555-0001-0000-0000-000000000004', 'Boucherie El Medina', 'جزارة المدينة', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1700, 36.7990), 4326)::geography, '5 Souk El Attarine', 'Tunis', 'Tunis', '+216 71 123 004', false, true),
+    ('55555555-0001-0000-0000-000000000005', 'Boucherie El Wafa', 'جزارة الوفاء', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1790, 36.8045), 4326)::geography, '12 Rue Charles de Gaulle', 'Tunis', 'Tunis', '+216 71 123 005', true, true),
 
--- Prix Baguette
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000022', '44444444-0000-0000-0000-000000000071', '55555555-0000-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001',
-     0.800, '11111111-0000-0000-0000-000000000006', 'TND', 0.85, 18, true, true, NOW() + INTERVAL '30 days');
+    -- Boulangeries Tunis Centre
+    ('55555555-0001-0000-0000-000000000010', 'Boulangerie Le Croissant', 'مخبزة الكرواسون', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1790, 36.8080), 4326)::geography, '5 Rue de Rome', 'Tunis', 'Tunis', '+216 71 124 001', true, true),
+    ('55555555-0001-0000-0000-000000000011', 'Boulangerie Essabah', 'مخبزة الصباح', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1830, 36.8045), 4326)::geography, '12 Avenue de Paris', 'Tunis', 'Tunis', '+216 71 124 002', false, true),
+    ('55555555-0001-0000-0000-000000000012', 'Pâtisserie Masmoudi', 'حلويات مسمودي', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1820, 36.8070), 4326)::geography, '8 Avenue Habib Bourguiba', 'Tunis', 'Tunis', '+216 71 124 003', true, true),
+    ('55555555-0001-0000-0000-000000000013', 'Boulangerie El Kahwa', 'مخبزة القهوة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1760, 36.8020), 4326)::geography, '3 Rue de Hollande', 'Tunis', 'Tunis', '+216 71 124 004', false, true),
 
--- Prix Lait
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000030', '44444444-0000-0000-0000-000000000030', '55555555-0000-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001',
-     1.450, '11111111-0000-0000-0000-000000000004', 'TND', 0.88, 22, true, true, NOW() + INTERVAL '30 days'),
-    ('77777777-0000-0000-0000-000000000031', '44444444-0000-0000-0000-000000000030', '55555555-0000-0000-0000-000000000021', '66666666-0000-0000-0000-000000000001',
-     1.500, '11111111-0000-0000-0000-000000000004', 'TND', 0.80, 15, true, true, NOW() + INTERVAL '30 days');
+    -- Épiceries Tunis Centre
+    ('55555555-0001-0000-0000-000000000020', 'Épicerie Chez Mohamed', 'بقالة عند محمد', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1800, 36.8055), 4326)::geography, '18 Rue Ibn Khaldoun', 'Tunis', 'Tunis', '+216 71 125 001', false, true),
+    ('55555555-0001-0000-0000-000000000021', 'Superette El Manar', 'سوبريت المنار', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1760, 36.8090), 4326)::geography, '25 Avenue Farhat Hached', 'Tunis', 'Tunis', '+216 71 125 002', true, true),
+    ('55555555-0001-0000-0000-000000000022', 'Monoprix Tunis', 'مونوبري تونس', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1810, 36.8060), 4326)::geography, '1 Avenue Habib Bourguiba', 'Tunis', 'Tunis', '+216 71 125 003', true, true),
+    ('55555555-0001-0000-0000-000000000023', 'Épicerie El Jazira', 'بقالة الجزيرة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1840, 36.8035), 4326)::geography, '7 Rue de Grèce', 'Tunis', 'Tunis', '+216 71 125 004', false, true),
 
--- Prix Œufs (douzaine)
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000040', '44444444-0000-0000-0000-000000000033', '55555555-0000-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001',
-     4.200, '11111111-0000-0000-0000-000000000010', 'TND', 0.82, 14, false, true, NOW() + INTERVAL '30 days'),
-    ('77777777-0000-0000-0000-000000000041', '44444444-0000-0000-0000-000000000033', '55555555-0000-0000-0000-000000000021', '66666666-0000-0000-0000-000000000001',
-     4.500, '11111111-0000-0000-0000-000000000010', 'TND', 0.78, 10, true, true, NOW() + INTERVAL '30 days');
+    -- Primeurs Tunis Centre
+    ('55555555-0001-0000-0000-000000000030', 'Primeur Fruits du Soleil', 'خضر وفواكه الشمس', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.1840, 36.8070), 4326)::geography, '3 Marché Central', 'Tunis', 'Tunis', '+216 71 126 001', false, true),
+    ('55555555-0001-0000-0000-000000000031', 'Primeur El Fella7', 'الفلاح للخضر', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.1720, 36.8010), 4326)::geography, '15 Marché Halfaouine', 'Tunis', 'Tunis', '+216 71 126 002', true, true),
 
--- Prix Huile d'olive
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000050', '44444444-0000-0000-0000-000000000063', '55555555-0000-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001',
-     15.000, '11111111-0000-0000-0000-000000000004', 'TND', 0.75, 8, false, true, NOW() + INTERVAL '30 days'),
-    ('77777777-0000-0000-0000-000000000051', '44444444-0000-0000-0000-000000000063', '55555555-0000-0000-0000-000000000021', '66666666-0000-0000-0000-000000000001',
-     18.500, '11111111-0000-0000-0000-000000000004', 'TND', 0.85, 12, true, true, NOW() + INTERVAL '30 days');
+    -- Coiffeurs Tunis Centre
+    ('55555555-0001-0000-0000-000000000040', 'Salon Élégance', 'صالون الأناقة', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.1770, 36.8060), 4326)::geography, '7 Rue de Hollande', 'Tunis', 'Tunis', '+216 71 127 001', true, true),
+    ('55555555-0001-0000-0000-000000000041', 'Coiffeur Le Style', 'حلاق الستايل', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.1820, 36.8095), 4326)::geography, '14 Avenue de Carthage', 'Tunis', 'Tunis', '+216 71 127 002', false, true),
+    ('55555555-0001-0000-0000-000000000042', 'Barbershop Classic', 'حلاق كلاسيك', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.1795, 36.8040), 4326)::geography, '22 Rue de Yougoslavie', 'Tunis', 'Tunis', '+216 71 127 003', true, true),
 
--- Prix Tomates
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000060', '44444444-0000-0000-0000-000000000060', '55555555-0000-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001',
-     2.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.70, 6, false, true, NOW() + INTERVAL '30 days');
+    -- Quincailleries Tunis Centre
+    ('55555555-0001-0000-0000-000000000050', 'Quincaillerie Générale', 'خردوات عامة', '22222222-0000-0000-0000-000000000021',
+     ST_SetSRID(ST_MakePoint(10.1850, 36.8040), 4326)::geography, '20 Rue Mongi Slim', 'Tunis', 'Tunis', '+216 71 128 001', true, true),
+    ('55555555-0001-0000-0000-000000000051', 'Bricorama Tunis', 'بريكوراما تونس', '22222222-0000-0000-0000-000000000021',
+     ST_SetSRID(ST_MakePoint(10.1730, 36.8080), 4326)::geography, '5 Avenue de Madrid', 'Tunis', 'Tunis', '+216 71 128 002', true, true),
 
--- Prix Coupe homme (coiffeur)
-INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000070', '44444444-0000-0000-0000-000000000040', '55555555-0000-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001',
-     8.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.90, 30, true, true, NOW() + INTERVAL '30 days'),
-    ('77777777-0000-0000-0000-000000000071', '44444444-0000-0000-0000-000000000040', '55555555-0000-0000-0000-000000000041', '66666666-0000-0000-0000-000000000001',
-     12.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.75, 15, false, true, NOW() + INTERVAL '30 days');
+    -- Pharmacies Tunis Centre
+    ('55555555-0001-0000-0000-000000000060', 'Pharmacie Centrale', 'صيدلية المركزية', '22222222-0000-0000-0000-000000000031',
+     ST_SetSRID(ST_MakePoint(10.1805, 36.8050), 4326)::geography, '10 Avenue Habib Bourguiba', 'Tunis', 'Tunis', '+216 71 129 001', true, true),
+    ('55555555-0001-0000-0000-000000000061', 'Pharmacie El Amal', 'صيدلية الأمل', '22222222-0000-0000-0000-000000000031',
+     ST_SetSRID(ST_MakePoint(10.1780, 36.8075), 4326)::geography, '18 Rue de Rome', 'Tunis', 'Tunis', '+216 71 129 002', false, true);
 
--- Prix Ciment
+-- ============================================================================
+-- COMMERCES - LA MARSA
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    -- Boucheries La Marsa
+    ('55555555-0002-0000-0000-000000000001', 'Boucherie La Marsa', 'جزارة المرسى', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.3245, 36.8785), 4326)::geography, '5 Avenue Habib Bourguiba', 'La Marsa', 'Tunis', '+216 71 740 001', true, true),
+    ('55555555-0002-0000-0000-000000000002', 'Boucherie El Bahri', 'جزارة البحري', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.3280, 36.8810), 4326)::geography, '12 Rue du Casino', 'La Marsa', 'Tunis', '+216 71 740 002', false, true),
+    ('55555555-0002-0000-0000-000000000003', 'Boucherie Premium', 'جزارة بريميوم', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.3210, 36.8760), 4326)::geography, '8 Avenue Taieb Mhiri', 'La Marsa', 'Tunis', '+216 71 740 003', true, true),
+
+    -- Boulangeries La Marsa
+    ('55555555-0002-0000-0000-000000000010', 'Boulangerie La Rose', 'مخبزة الوردة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.3260, 36.8790), 4326)::geography, '3 Place Saf Saf', 'La Marsa', 'Tunis', '+216 71 741 001', true, true),
+    ('55555555-0002-0000-0000-000000000011', 'Paul La Marsa', 'بول المرسى', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.3235, 36.8770), 4326)::geography, '15 Avenue Habib Bourguiba', 'La Marsa', 'Tunis', '+216 71 741 002', true, true),
+    ('55555555-0002-0000-0000-000000000012', 'Boulangerie El Yasmine', 'مخبزة الياسمين', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.3290, 36.8800), 4326)::geography, '7 Rue de la Plage', 'La Marsa', 'Tunis', '+216 71 741 003', false, true),
+
+    -- Épiceries La Marsa
+    ('55555555-0002-0000-0000-000000000020', 'Carrefour Express Marsa', 'كارفور اكسبرس المرسى', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.3250, 36.8780), 4326)::geography, '20 Avenue Habib Bourguiba', 'La Marsa', 'Tunis', '+216 71 742 001', true, true),
+    ('55555555-0002-0000-0000-000000000021', 'Épicerie El Corniche', 'بقالة الكورنيش', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.3300, 36.8820), 4326)::geography, '2 Corniche', 'La Marsa', 'Tunis', '+216 71 742 002', false, true),
+
+    -- Coiffeurs La Marsa
+    ('55555555-0002-0000-0000-000000000040', 'Salon Prestige', 'صالون برستيج', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.3240, 36.8775), 4326)::geography, '9 Rue Taieb Mhiri', 'La Marsa', 'Tunis', '+216 71 743 001', true, true),
+    ('55555555-0002-0000-0000-000000000041', 'Coiffure & Spa Marine', 'تجميل ماران', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.3270, 36.8795), 4326)::geography, '11 Avenue de la République', 'La Marsa', 'Tunis', '+216 71 743 002', true, true),
+
+    -- Primeurs La Marsa
+    ('55555555-0002-0000-0000-000000000030', 'Primeur Bio Marsa', 'خضر بيو المرسى', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.3225, 36.8765), 4326)::geography, '6 Marché La Marsa', 'La Marsa', 'Tunis', '+216 71 744 001', true, true);
+
+-- ============================================================================
+-- COMMERCES - CARTHAGE / SIDI BOU SAID
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0003-0000-0000-000000000001', 'Boucherie Carthage', 'جزارة قرطاج', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.3295, 36.8525), 4326)::geography, '10 Avenue Habib Bourguiba', 'Carthage', 'Tunis', '+216 71 730 001', true, true),
+    ('55555555-0003-0000-0000-000000000010', 'Boulangerie Sidi Bou', 'مخبزة سيدي بو', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.3480, 36.8690), 4326)::geography, '5 Rue Habib Thameur', 'Sidi Bou Said', 'Tunis', '+216 71 731 001', true, true),
+    ('55555555-0003-0000-0000-000000000020', 'Épicerie El Kahina', 'بقالة الكاهنة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.3310, 36.8540), 4326)::geography, '3 Rue Hannibal', 'Carthage', 'Tunis', '+216 71 732 001', false, true),
+    ('55555555-0003-0000-0000-000000000040', 'Salon Carthage VIP', 'صالون قرطاج', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.3285, 36.8535), 4326)::geography, '8 Avenue Bourguiba', 'Carthage', 'Tunis', '+216 71 733 001', true, true);
+
+-- ============================================================================
+-- COMMERCES - LE BARDO
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0004-0000-0000-000000000001', 'Boucherie El Bardo', 'جزارة باردو', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1345, 36.8090), 4326)::geography, '15 Avenue du 20 Mars', 'Le Bardo', 'Tunis', '+216 71 510 001', true, true),
+    ('55555555-0004-0000-0000-000000000002', 'Boucherie Nationale', 'الجزارة الوطنية', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1380, 36.8110), 4326)::geography, '8 Rue de la République', 'Le Bardo', 'Tunis', '+216 71 510 002', false, true),
+    ('55555555-0004-0000-0000-000000000010', 'Boulangerie El Bardo', 'مخبزة باردو', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1360, 36.8100), 4326)::geography, '22 Avenue Mongi Slim', 'Le Bardo', 'Tunis', '+216 71 511 001', true, true),
+    ('55555555-0004-0000-0000-000000000011', 'Boulangerie Ennour', 'مخبزة النور', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1320, 36.8075), 4326)::geography, '5 Rue Ibn Khaldoun', 'Le Bardo', 'Tunis', '+216 71 511 002', false, true),
+    ('55555555-0004-0000-0000-000000000020', 'Géant Bardo', 'جيون باردو', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1400, 36.8130), 4326)::geography, 'Centre Commercial Bardo', 'Le Bardo', 'Tunis', '+216 71 512 001', true, true),
+    ('55555555-0004-0000-0000-000000000021', 'Épicerie El Watan', 'بقالة الوطن', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1330, 36.8085), 4326)::geography, '12 Avenue Kheireddine', 'Le Bardo', 'Tunis', '+216 71 512 002', false, true),
+    ('55555555-0004-0000-0000-000000000030', 'Primeur El Bardo', 'خضر باردو', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.1355, 36.8095), 4326)::geography, '18 Marché Bardo', 'Le Bardo', 'Tunis', '+216 71 513 001', true, true),
+    ('55555555-0004-0000-0000-000000000040', 'Coiffeur El Bardo', 'حلاق باردو', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.1370, 36.8105), 4326)::geography, '7 Rue de Kairouan', 'Le Bardo', 'Tunis', '+216 71 514 001', false, true),
+    ('55555555-0004-0000-0000-000000000050', 'Quincaillerie Bardo', 'خردوات باردو', '22222222-0000-0000-0000-000000000021',
+     ST_SetSRID(ST_MakePoint(10.1390, 36.8120), 4326)::geography, '25 Avenue du 20 Mars', 'Le Bardo', 'Tunis', '+216 71 515 001', true, true);
+
+-- ============================================================================
+-- COMMERCES - L'ARIANA
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0005-0000-0000-000000000001', 'Boucherie Ariana', 'جزارة أريانة', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1930, 36.8620), 4326)::geography, '10 Avenue Habib Bourguiba', 'Ariana', 'Ariana', '+216 71 710 001', true, true),
+    ('55555555-0005-0000-0000-000000000002', 'Boucherie El Ghazela', 'جزارة الغزالة', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1880, 36.8580), 4326)::geography, '5 Rue de la Liberté', 'Ariana', 'Ariana', '+216 71 710 002', false, true),
+    ('55555555-0005-0000-0000-000000000003', 'Boucherie Ennasr', 'جزارة النصر', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1850, 36.8550), 4326)::geography, '22 Cité Ennasr', 'Ariana', 'Ariana', '+216 71 710 003', true, true),
+    ('55555555-0005-0000-0000-000000000010', 'Boulangerie Ariana', 'مخبزة أريانة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1940, 36.8630), 4326)::geography, '15 Avenue de l''Indépendance', 'Ariana', 'Ariana', '+216 71 711 001', true, true),
+    ('55555555-0005-0000-0000-000000000011', 'Boulangerie El Frina', 'مخبزة الفرينة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1900, 36.8600), 4326)::geography, '8 Rue Mohamed V', 'Ariana', 'Ariana', '+216 71 711 002', false, true),
+    ('55555555-0005-0000-0000-000000000020', 'Carrefour Ariana', 'كارفور أريانة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1920, 36.8610), 4326)::geography, 'Centre Commercial Ariana', 'Ariana', 'Ariana', '+216 71 712 001', true, true),
+    ('55555555-0005-0000-0000-000000000021', 'Épicerie Ennasr', 'بقالة النصر', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1860, 36.8560), 4326)::geography, '30 Cité Ennasr 2', 'Ariana', 'Ariana', '+216 71 712 002', false, true),
+    ('55555555-0005-0000-0000-000000000022', 'MG Ariana', 'ام جي اريانة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1870, 36.8570), 4326)::geography, '12 Avenue Yasser Arafat', 'Ariana', 'Ariana', '+216 71 712 003', true, true),
+    ('55555555-0005-0000-0000-000000000030', 'Primeur Ariana', 'خضر أريانة', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.1910, 36.8590), 4326)::geography, 'Marché Ariana', 'Ariana', 'Ariana', '+216 71 713 001', true, true),
+    ('55555555-0005-0000-0000-000000000040', 'Salon El Ariana', 'صالون أريانة', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.1925, 36.8615), 4326)::geography, '18 Rue de Sousse', 'Ariana', 'Ariana', '+216 71 714 001', true, true),
+    ('55555555-0005-0000-0000-000000000050', 'Bricotech Ariana', 'بريكوتاك أريانة', '22222222-0000-0000-0000-000000000021',
+     ST_SetSRID(ST_MakePoint(10.1890, 36.8585), 4326)::geography, '25 Zone Industrielle', 'Ariana', 'Ariana', '+216 71 715 001', true, true);
+
+-- ============================================================================
+-- COMMERCES - BEN AROUS
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0006-0000-0000-000000000001', 'Boucherie Ben Arous', 'جزارة بن عروس', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.2280, 36.7530), 4326)::geography, '8 Avenue Farhat Hached', 'Ben Arous', 'Ben Arous', '+216 71 380 001', true, true),
+    ('55555555-0006-0000-0000-000000000002', 'Boucherie Mégrine', 'جزارة مقرين', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.2340, 36.7680), 4326)::geography, '15 Rue de Sfax', 'Mégrine', 'Ben Arous', '+216 71 380 002', false, true),
+    ('55555555-0006-0000-0000-000000000003', 'Boucherie Radès', 'جزارة رادس', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.2750, 36.7680), 4326)::geography, '3 Avenue de Carthage', 'Radès', 'Ben Arous', '+216 71 380 003', true, true),
+    ('55555555-0006-0000-0000-000000000010', 'Boulangerie Ben Arous', 'مخبزة بن عروس', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.2290, 36.7540), 4326)::geography, '12 Rue Habib Thameur', 'Ben Arous', 'Ben Arous', '+216 71 381 001', true, true),
+    ('55555555-0006-0000-0000-000000000011', 'Boulangerie Hammam Lif', 'مخبزة حمام الأنف', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.3270, 36.7280), 4326)::geography, '7 Avenue de la Plage', 'Hammam Lif', 'Ben Arous', '+216 71 381 002', false, true),
+    ('55555555-0006-0000-0000-000000000020', 'Géant Ben Arous', 'جيون بن عروس', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.2270, 36.7520), 4326)::geography, 'Centre Commercial Ben Arous', 'Ben Arous', 'Ben Arous', '+216 71 382 001', true, true),
+    ('55555555-0006-0000-0000-000000000021', 'Épicerie Radès', 'بقالة رادس', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.2760, 36.7690), 4326)::geography, '20 Rue de Tunis', 'Radès', 'Ben Arous', '+216 71 382 002', false, true),
+    ('55555555-0006-0000-0000-000000000030', 'Primeur Mégrine', 'خضر مقرين', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.2350, 36.7690), 4326)::geography, 'Marché Mégrine', 'Mégrine', 'Ben Arous', '+216 71 383 001', true, true),
+    ('55555555-0006-0000-0000-000000000040', 'Coiffeur Ben Arous', 'حلاق بن عروس', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.2285, 36.7535), 4326)::geography, '5 Rue de Monastir', 'Ben Arous', 'Ben Arous', '+216 71 384 001', true, true),
+    ('55555555-0006-0000-0000-000000000050', 'Quincaillerie Sud', 'خردوات الجنوب', '22222222-0000-0000-0000-000000000021',
+     ST_SetSRID(ST_MakePoint(10.2300, 36.7550), 4326)::geography, '30 Zone Industrielle', 'Ben Arous', 'Ben Arous', '+216 71 385 001', true, true);
+
+-- ============================================================================
+-- COMMERCES - MANOUBA
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0007-0000-0000-000000000001', 'Boucherie Manouba', 'جزارة منوبة', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.0970, 36.8080), 4326)::geography, '5 Avenue Habib Bourguiba', 'Manouba', 'Manouba', '+216 71 600 001', true, true),
+    ('55555555-0007-0000-0000-000000000002', 'Boucherie Den Den', 'جزارة الدندان', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.0850, 36.8200), 4326)::geography, '12 Rue Principale', 'Den Den', 'Manouba', '+216 71 600 002', false, true),
+    ('55555555-0007-0000-0000-000000000010', 'Boulangerie Manouba', 'مخبزة منوبة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.0980, 36.8090), 4326)::geography, '8 Rue de la Gare', 'Manouba', 'Manouba', '+216 71 601 001', true, true),
+    ('55555555-0007-0000-0000-000000000020', 'Épicerie Manouba', 'بقالة منوبة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.0960, 36.8070), 4326)::geography, '15 Avenue de l''Indépendance', 'Manouba', 'Manouba', '+216 71 602 001', false, true),
+    ('55555555-0007-0000-0000-000000000030', 'Primeur Manouba', 'خضر منوبة', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.0975, 36.8085), 4326)::geography, 'Marché Manouba', 'Manouba', 'Manouba', '+216 71 603 001', true, true),
+    ('55555555-0007-0000-0000-000000000040', 'Coiffeur Manouba', 'حلاق منوبة', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.0965, 36.8075), 4326)::geography, '3 Rue de Kairouan', 'Manouba', 'Manouba', '+216 71 604 001', false, true);
+
+-- ============================================================================
+-- COMMERCES - LAC 1 & LAC 2 (Zone d'affaires)
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0008-0000-0000-000000000001', 'Boucherie Les Berges du Lac', 'جزارة ضفاف البحيرة', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.2280, 36.8340), 4326)::geography, '10 Rue du Lac Léman', 'Les Berges du Lac', 'Tunis', '+216 71 960 001', true, true),
+    ('55555555-0008-0000-0000-000000000010', 'Boulangerie Lac 2', 'مخبزة البحيرة 2', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.2420, 36.8400), 4326)::geography, '5 Rue du Lac Windermere', 'Lac 2', 'Tunis', '+216 71 961 001', true, true),
+    ('55555555-0008-0000-0000-000000000011', 'Pâtisserie du Lac', 'حلويات البحيرة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.2300, 36.8350), 4326)::geography, '12 Rue du Lac Turkana', 'Les Berges du Lac', 'Tunis', '+216 71 961 002', true, true),
+    ('55555555-0008-0000-0000-000000000020', 'Carrefour Market Lac', 'كارفور ماركت البحيرة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.2260, 36.8330), 4326)::geography, 'Centre Commercial Le Lac', 'Les Berges du Lac', 'Tunis', '+216 71 962 001', true, true),
+    ('55555555-0008-0000-0000-000000000021', 'MG Lac 2', 'ام جي البحيرة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.2440, 36.8410), 4326)::geography, '8 Rue du Lac Constance', 'Lac 2', 'Tunis', '+216 71 962 002', true, true),
+    ('55555555-0008-0000-0000-000000000040', 'Salon Executive', 'صالون اكزكتيف', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.2290, 36.8345), 4326)::geography, '15 Rue du Lac Biwa', 'Les Berges du Lac', 'Tunis', '+216 71 964 001', true, true),
+    ('55555555-0008-0000-0000-000000000041', 'Barbershop Premium Lac', 'حلاق بريميوم البحيرة', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.2430, 36.8405), 4326)::geography, '3 Rue du Lac Victoria', 'Lac 2', 'Tunis', '+216 71 964 002', true, true);
+
+-- ============================================================================
+-- COMMERCES - CENTRE URBAIN NORD (CUN)
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0009-0000-0000-000000000001', 'Boucherie CUN', 'جزارة المركز العمراني', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.1890, 36.8450), 4326)::geography, '10 Avenue Hédi Nouira', 'Centre Urbain Nord', 'Tunis', '+216 71 750 001', true, true),
+    ('55555555-0009-0000-0000-000000000010', 'Boulangerie CUN', 'مخبزة المركز العمراني', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.1900, 36.8460), 4326)::geography, '5 Rue de l''INSAT', 'Centre Urbain Nord', 'Tunis', '+216 71 751 001', true, true),
+    ('55555555-0009-0000-0000-000000000020', 'Géant CUN', 'جيون المركز العمراني', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.1880, 36.8440), 4326)::geography, 'Centre Commercial CUN', 'Centre Urbain Nord', 'Tunis', '+216 71 752 001', true, true),
+    ('55555555-0009-0000-0000-000000000040', 'Salon CUN VIP', 'صالون المركز', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.1895, 36.8455), 4326)::geography, '18 Avenue Hédi Nouira', 'Centre Urbain Nord', 'Tunis', '+216 71 754 001', true, true);
+
+-- ============================================================================
+-- COMMERCES - SOUKRA
+-- ============================================================================
+
+INSERT INTO vendors (id, name, name_ar, category_id, location, address, city, governorate, phone, is_verified, is_active) VALUES
+    ('55555555-0010-0000-0000-000000000001', 'Boucherie Soukra', 'جزارة سكرة', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.2150, 36.8600), 4326)::geography, '12 Avenue Taieb Mhiri', 'Soukra', 'Ariana', '+216 71 760 001', true, true),
+    ('55555555-0010-0000-0000-000000000002', 'Boucherie El Manar', 'جزارة المنار', '22222222-0000-0000-0000-000000000002',
+     ST_SetSRID(ST_MakePoint(10.2200, 36.8650), 4326)::geography, '8 Rue de la Soukra', 'Soukra', 'Ariana', '+216 71 760 002', false, true),
+    ('55555555-0010-0000-0000-000000000010', 'Boulangerie Soukra', 'مخبزة سكرة', '22222222-0000-0000-0000-000000000005',
+     ST_SetSRID(ST_MakePoint(10.2160, 36.8610), 4326)::geography, '5 Avenue Habib Bourguiba', 'Soukra', 'Ariana', '+216 71 761 001', true, true),
+    ('55555555-0010-0000-0000-000000000020', 'Aziza Soukra', 'عزيزة سكرة', '22222222-0000-0000-0000-000000000004',
+     ST_SetSRID(ST_MakePoint(10.2170, 36.8620), 4326)::geography, '20 Rue Principale', 'Soukra', 'Ariana', '+216 71 762 001', true, true),
+    ('55555555-0010-0000-0000-000000000030', 'Primeur Soukra', 'خضر سكرة', '22222222-0000-0000-0000-000000000006',
+     ST_SetSRID(ST_MakePoint(10.2140, 36.8590), 4326)::geography, 'Marché Soukra', 'Soukra', 'Ariana', '+216 71 763 001', true, true),
+    ('55555555-0010-0000-0000-000000000040', 'Coiffeur Soukra', 'حلاق سكرة', '22222222-0000-0000-0000-000000000011',
+     ST_SetSRID(ST_MakePoint(10.2155, 36.8605), 4326)::geography, '3 Rue Ibn Sina', 'Soukra', 'Ariana', '+216 71 764 001', true, true);
+
+-- ============================================================================
+-- PRIX DE TEST - VIANDE DE BŒUF (Tous les commerces)
+-- ============================================================================
+
 INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
-    ('77777777-0000-0000-0000-000000000080', '44444444-0000-0000-0000-000000000050', '55555555-0000-0000-0000-000000000050', '66666666-0000-0000-0000-000000000001',
-     0.450, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 20, true, true, NOW() + INTERVAL '30 days');
+    -- Tunis Centre
+    ('77777777-0001-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0001-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 28.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 15, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0001-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 32.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.70, 8, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0001-0000-000000000003', '44444444-0000-0000-0000-000000000001', '55555555-0001-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001', 35.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.90, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0001-0000-000000000004', '44444444-0000-0000-0000-000000000001', '55555555-0001-0000-0000-000000000004', '66666666-0000-0000-0000-000000000001', 26.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.65, 5, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0001-0000-000000000005', '44444444-0000-0000-0000-000000000001', '55555555-0001-0000-0000-000000000005', '66666666-0000-0000-0000-000000000001', 30.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.80, 12, true, true, NOW() + INTERVAL '30 days'),
+    -- La Marsa
+    ('77777777-0002-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0002-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 38.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.88, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0002-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 36.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.75, 10, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0001-0000-000000000003', '44444444-0000-0000-0000-000000000001', '55555555-0002-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001', 42.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.92, 30, true, true, NOW() + INTERVAL '30 days'),
+    -- Carthage
+    ('77777777-0003-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0003-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 40.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 18, true, true, NOW() + INTERVAL '30 days'),
+    -- Le Bardo
+    ('77777777-0004-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0004-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 29.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.82, 14, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0004-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 31.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.70, 8, false, true, NOW() + INTERVAL '30 days'),
+    -- Ariana
+    ('77777777-0005-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0005-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 30.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 16, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0005-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 28.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.72, 9, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0001-0000-000000000003', '44444444-0000-0000-0000-000000000001', '55555555-0005-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001', 33.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.88, 20, true, true, NOW() + INTERVAL '30 days'),
+    -- Ben Arous
+    ('77777777-0006-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0006-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 27.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.80, 12, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0006-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 29.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.68, 6, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0001-0000-000000000003', '44444444-0000-0000-0000-000000000001', '55555555-0006-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001', 31.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 15, true, true, NOW() + INTERVAL '30 days'),
+    -- Manouba
+    ('77777777-0007-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0007-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 26.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.78, 10, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0007-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0007-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 25.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.65, 4, false, true, NOW() + INTERVAL '30 days'),
+    -- Lac
+    ('77777777-0008-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0008-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 45.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.92, 28, true, true, NOW() + INTERVAL '30 days'),
+    -- CUN
+    ('77777777-0009-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0009-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 34.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 17, true, true, NOW() + INTERVAL '30 days'),
+    -- Soukra
+    ('77777777-0010-0001-0000-000000000001', '44444444-0000-0000-0000-000000000001', '55555555-0010-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 32.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.82, 13, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0010-0001-0000-000000000002', '44444444-0000-0000-0000-000000000001', '55555555-0010-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 30.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.70, 7, false, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - POULET
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0002-0000-000000000001', '44444444-0000-0000-0000-000000000020', '55555555-0001-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 12.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0002-0000-000000000002', '44444444-0000-0000-0000-000000000020', '55555555-0001-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 13.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.72, 8, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0002-0000-000000000003', '44444444-0000-0000-0000-000000000020', '55555555-0001-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001', 14.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.88, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0002-0000-000000000001', '44444444-0000-0000-0000-000000000020', '55555555-0002-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 15.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.90, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0002-0000-000000000001', '44444444-0000-0000-0000-000000000020', '55555555-0004-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 11.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.78, 12, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0002-0000-000000000001', '44444444-0000-0000-0000-000000000020', '55555555-0005-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 12.200, '11111111-0000-0000-0000-000000000001', 'TND', 0.82, 15, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0002-0000-000000000001', '44444444-0000-0000-0000-000000000020', '55555555-0006-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 11.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.75, 10, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0007-0002-0000-000000000001', '44444444-0000-0000-0000-000000000020', '55555555-0007-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 10.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.70, 6, false, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - PAIN
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    -- Tunis Centre
+    ('77777777-0001-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0001-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.350, '11111111-0000-0000-0000-000000000006', 'TND', 0.92, 35, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0003-0000-000000000002', '44444444-0000-0000-0000-000000000070', '55555555-0001-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 0.400, '11111111-0000-0000-0000-000000000006', 'TND', 0.85, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0003-0000-000000000003', '44444444-0000-0000-0000-000000000070', '55555555-0001-0000-0000-000000000012', '66666666-0000-0000-0000-000000000001', 0.500, '11111111-0000-0000-0000-000000000006', 'TND', 0.90, 30, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0003-0000-000000000004', '44444444-0000-0000-0000-000000000070', '55555555-0001-0000-0000-000000000013', '66666666-0000-0000-0000-000000000001', 0.300, '11111111-0000-0000-0000-000000000006', 'TND', 0.75, 15, false, true, NOW() + INTERVAL '30 days'),
+    -- La Marsa
+    ('77777777-0002-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0002-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.450, '11111111-0000-0000-0000-000000000006', 'TND', 0.88, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0003-0000-000000000002', '44444444-0000-0000-0000-000000000070', '55555555-0002-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 0.600, '11111111-0000-0000-0000-000000000006', 'TND', 0.92, 32, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0003-0000-000000000003', '44444444-0000-0000-0000-000000000070', '55555555-0002-0000-0000-000000000012', '66666666-0000-0000-0000-000000000001', 0.380, '11111111-0000-0000-0000-000000000006', 'TND', 0.78, 18, false, true, NOW() + INTERVAL '30 days'),
+    -- Carthage
+    ('77777777-0003-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0003-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.550, '11111111-0000-0000-0000-000000000006', 'TND', 0.85, 22, true, true, NOW() + INTERVAL '30 days'),
+    -- Le Bardo
+    ('77777777-0004-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0004-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.320, '11111111-0000-0000-0000-000000000006', 'TND', 0.82, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0003-0000-000000000002', '44444444-0000-0000-0000-000000000070', '55555555-0004-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 0.280, '11111111-0000-0000-0000-000000000006', 'TND', 0.70, 10, false, true, NOW() + INTERVAL '30 days'),
+    -- Ariana
+    ('77777777-0005-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0005-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.350, '11111111-0000-0000-0000-000000000006', 'TND', 0.85, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0003-0000-000000000002', '44444444-0000-0000-0000-000000000070', '55555555-0005-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 0.380, '11111111-0000-0000-0000-000000000006', 'TND', 0.78, 15, false, true, NOW() + INTERVAL '30 days'),
+    -- Ben Arous
+    ('77777777-0006-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0006-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.300, '11111111-0000-0000-0000-000000000006', 'TND', 0.80, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0003-0000-000000000002', '44444444-0000-0000-0000-000000000070', '55555555-0006-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 0.280, '11111111-0000-0000-0000-000000000006', 'TND', 0.72, 12, false, true, NOW() + INTERVAL '30 days'),
+    -- Manouba
+    ('77777777-0007-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0007-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.250, '11111111-0000-0000-0000-000000000006', 'TND', 0.75, 14, true, true, NOW() + INTERVAL '30 days'),
+    -- Lac
+    ('77777777-0008-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0008-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.700, '11111111-0000-0000-0000-000000000006', 'TND', 0.90, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0003-0000-000000000002', '44444444-0000-0000-0000-000000000070', '55555555-0008-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 0.650, '11111111-0000-0000-0000-000000000006', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    -- CUN
+    ('77777777-0009-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0009-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.450, '11111111-0000-0000-0000-000000000006', 'TND', 0.85, 22, true, true, NOW() + INTERVAL '30 days'),
+    -- Soukra
+    ('77777777-0010-0003-0000-000000000001', '44444444-0000-0000-0000-000000000070', '55555555-0010-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.400, '11111111-0000-0000-0000-000000000006', 'TND', 0.82, 18, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - BAGUETTE
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0004-0000-000000000001', '44444444-0000-0000-0000-000000000071', '55555555-0001-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 0.800, '11111111-0000-0000-0000-000000000006', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0004-0000-000000000002', '44444444-0000-0000-0000-000000000071', '55555555-0001-0000-0000-000000000012', '66666666-0000-0000-0000-000000000001', 1.200, '11111111-0000-0000-0000-000000000006', 'TND', 0.92, 30, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0004-0000-000000000001', '44444444-0000-0000-0000-000000000071', '55555555-0002-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 1.000, '11111111-0000-0000-0000-000000000006', 'TND', 0.85, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0004-0000-000000000002', '44444444-0000-0000-0000-000000000071', '55555555-0002-0000-0000-000000000011', '66666666-0000-0000-0000-000000000001', 1.500, '11111111-0000-0000-0000-000000000006', 'TND', 0.90, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0004-0000-000000000001', '44444444-0000-0000-0000-000000000071', '55555555-0008-0000-0000-000000000010', '66666666-0000-0000-0000-000000000001', 1.800, '11111111-0000-0000-0000-000000000006', 'TND', 0.92, 32, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - LAIT
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0001-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.450, '11111111-0000-0000-0000-000000000004', 'TND', 0.90, 30, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0005-0000-000000000002', '44444444-0000-0000-0000-000000000030', '55555555-0001-0000-0000-000000000021', '66666666-0000-0000-0000-000000000001', 1.500, '11111111-0000-0000-0000-000000000004', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0005-0000-000000000003', '44444444-0000-0000-0000-000000000030', '55555555-0001-0000-0000-000000000022', '66666666-0000-0000-0000-000000000001', 1.480, '11111111-0000-0000-0000-000000000004', 'TND', 0.92, 35, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0002-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.550, '11111111-0000-0000-0000-000000000004', 'TND', 0.88, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0004-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.420, '11111111-0000-0000-0000-000000000004', 'TND', 0.85, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0005-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.480, '11111111-0000-0000-0000-000000000004', 'TND', 0.90, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0006-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.400, '11111111-0000-0000-0000-000000000004', 'TND', 0.82, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0008-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.650, '11111111-0000-0000-0000-000000000004', 'TND', 0.92, 30, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0009-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0009-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.520, '11111111-0000-0000-0000-000000000004', 'TND', 0.88, 24, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0010-0005-0000-000000000001', '44444444-0000-0000-0000-000000000030', '55555555-0010-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 1.480, '11111111-0000-0000-0000-000000000004', 'TND', 0.85, 20, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - ŒUFS (douzaine)
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0001-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 4.200, '11111111-0000-0000-0000-000000000010', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0006-0000-000000000002', '44444444-0000-0000-0000-000000000033', '55555555-0001-0000-0000-000000000021', '66666666-0000-0000-0000-000000000001', 4.500, '11111111-0000-0000-0000-000000000010', 'TND', 0.85, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0002-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 4.800, '11111111-0000-0000-0000-000000000010', 'TND', 0.90, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0004-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 4.000, '11111111-0000-0000-0000-000000000010', 'TND', 0.82, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0005-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 4.300, '11111111-0000-0000-0000-000000000010', 'TND', 0.85, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0006-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 3.800, '11111111-0000-0000-0000-000000000010', 'TND', 0.78, 14, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0007-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0007-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 3.600, '11111111-0000-0000-0000-000000000010', 'TND', 0.72, 10, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0006-0000-000000000001', '44444444-0000-0000-0000-000000000033', '55555555-0008-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 5.200, '11111111-0000-0000-0000-000000000010', 'TND', 0.92, 32, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - HUILE D'OLIVE
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0007-0000-000000000001', '44444444-0000-0000-0000-000000000063', '55555555-0001-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 15.000, '11111111-0000-0000-0000-000000000004', 'TND', 0.82, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0007-0000-000000000002', '44444444-0000-0000-0000-000000000063', '55555555-0001-0000-0000-000000000021', '66666666-0000-0000-0000-000000000001', 18.500, '11111111-0000-0000-0000-000000000004', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0007-0000-000000000001', '44444444-0000-0000-0000-000000000063', '55555555-0002-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 22.000, '11111111-0000-0000-0000-000000000004', 'TND', 0.90, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0007-0000-000000000001', '44444444-0000-0000-0000-000000000063', '55555555-0004-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 14.500, '11111111-0000-0000-0000-000000000004', 'TND', 0.80, 15, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0007-0000-000000000001', '44444444-0000-0000-0000-000000000063', '55555555-0005-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 16.000, '11111111-0000-0000-0000-000000000004', 'TND', 0.85, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0007-0007-0000-000000000001', '44444444-0000-0000-0000-000000000063', '55555555-0007-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 12.000, '11111111-0000-0000-0000-000000000004', 'TND', 0.72, 10, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0007-0000-000000000001', '44444444-0000-0000-0000-000000000063', '55555555-0008-0000-0000-000000000020', '66666666-0000-0000-0000-000000000001', 28.000, '11111111-0000-0000-0000-000000000004', 'TND', 0.92, 35, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - TOMATES
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0001-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 2.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.78, 15, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0008-0000-000000000002', '44444444-0000-0000-0000-000000000060', '55555555-0001-0000-0000-000000000031', '66666666-0000-0000-0000-000000000001', 2.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.82, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0002-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 3.500, '11111111-0000-0000-0000-000000000001', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0004-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 2.200, '11111111-0000-0000-0000-000000000001', 'TND', 0.75, 12, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0005-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 2.600, '11111111-0000-0000-0000-000000000001', 'TND', 0.80, 16, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0006-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 2.000, '11111111-0000-0000-0000-000000000001', 'TND', 0.72, 10, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0007-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0007-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 1.800, '11111111-0000-0000-0000-000000000001', 'TND', 0.68, 8, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0010-0008-0000-000000000001', '44444444-0000-0000-0000-000000000060', '55555555-0010-0000-0000-000000000030', '66666666-0000-0000-0000-000000000001', 2.400, '11111111-0000-0000-0000-000000000001', 'TND', 0.78, 14, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - COUPE HOMME (Coiffeur)
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0001-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 8.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.90, 35, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0009-0000-000000000002', '44444444-0000-0000-0000-000000000040', '55555555-0001-0000-0000-000000000041', '66666666-0000-0000-0000-000000000001', 12.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.85, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0009-0000-000000000003', '44444444-0000-0000-0000-000000000040', '55555555-0001-0000-0000-000000000042', '66666666-0000-0000-0000-000000000001', 10.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.88, 30, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0002-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 20.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.92, 40, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0002-0009-0000-000000000002', '44444444-0000-0000-0000-000000000040', '55555555-0002-0000-0000-000000000041', '66666666-0000-0000-0000-000000000001', 25.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.90, 35, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0003-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0003-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 30.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.92, 42, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0004-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 7.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.78, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0005-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 10.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.85, 28, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0006-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 6.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.75, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0007-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0007-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 5.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.70, 12, false, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0008-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 35.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.92, 45, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0008-0009-0000-000000000002', '44444444-0000-0000-0000-000000000040', '55555555-0008-0000-0000-000000000041', '66666666-0000-0000-0000-000000000001', 40.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.90, 38, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0009-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0009-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 15.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.88, 32, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0010-0009-0000-000000000001', '44444444-0000-0000-0000-000000000040', '55555555-0010-0000-0000-000000000040', '66666666-0000-0000-0000-000000000001', 12.000, '11111111-0000-0000-0000-000000000011', 'TND', 0.85, 25, true, true, NOW() + INTERVAL '30 days');
+
+-- ============================================================================
+-- PRIX DE TEST - CIMENT
+-- ============================================================================
+
+INSERT INTO price_reports (id, product_id, vendor_id, user_id, price, unit_id, currency, confidence_score, upvotes, is_verified, is_active, expires_at) VALUES
+    ('77777777-0001-0010-0000-000000000001', '44444444-0000-0000-0000-000000000050', '55555555-0001-0000-0000-000000000050', '66666666-0000-0000-0000-000000000001', 0.450, '11111111-0000-0000-0000-000000000001', 'TND', 0.88, 25, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0001-0010-0000-000000000002', '44444444-0000-0000-0000-000000000050', '55555555-0001-0000-0000-000000000051', '66666666-0000-0000-0000-000000000001', 0.420, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 22, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0004-0010-0000-000000000001', '44444444-0000-0000-0000-000000000050', '55555555-0004-0000-0000-000000000050', '66666666-0000-0000-0000-000000000001', 0.400, '11111111-0000-0000-0000-000000000001', 'TND', 0.82, 18, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0005-0010-0000-000000000001', '44444444-0000-0000-0000-000000000050', '55555555-0005-0000-0000-000000000050', '66666666-0000-0000-0000-000000000001', 0.430, '11111111-0000-0000-0000-000000000001', 'TND', 0.85, 20, true, true, NOW() + INTERVAL '30 days'),
+    ('77777777-0006-0010-0000-000000000001', '44444444-0000-0000-0000-000000000050', '55555555-0006-0000-0000-000000000050', '66666666-0000-0000-0000-000000000001', 0.380, '11111111-0000-0000-0000-000000000001', 'TND', 0.78, 15, true, true, NOW() + INTERVAL '30 days');
 
 -- ============================================================================
 -- Mise à jour des compteurs de prix sur les vendors
@@ -151,3 +494,18 @@ UPDATE vendors SET price_report_count = (
 UPDATE vendors SET last_price_update = (
     SELECT MAX(created_at) FROM price_reports WHERE vendor_id = vendors.id
 );
+
+-- ============================================================================
+-- Rafraîchir la vue matérialisée des meilleurs prix
+-- ============================================================================
+
+-- REFRESH MATERIALIZED VIEW IF EXISTS mv_best_prices;
+
+-- ============================================================================
+-- RÉSUMÉ DES DONNÉES
+-- ============================================================================
+-- Commerces : ~75 dans 10 zones du Grand Tunis
+-- Prix : ~120 prix pour 10 produits différents
+-- Zones : Tunis Centre, La Marsa, Carthage, Le Bardo, Ariana, Ben Arous, 
+--         Manouba, Lac 1/2, CUN, Soukra
+-- ============================================================================
