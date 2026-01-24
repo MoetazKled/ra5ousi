@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/theme_config.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 
 /// Page de profil utilisateur.
 /// 
@@ -13,14 +14,14 @@ class ProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: Récupérer les données utilisateur depuis le provider
-    final isLoggedIn = false; // Simulé pour la démo
+    final authState = ref.watch(authProvider);
+    final isLoggedIn = authState.isAuthenticated;
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundLight,
       body: SafeArea(
         child: isLoggedIn
-            ? _buildLoggedInProfile(context, ref)
+            ? _buildLoggedInProfile(context, ref, authState)
             : _buildGuestProfile(context),
       ),
     );
@@ -93,7 +94,12 @@ class ProfilePage extends ConsumerWidget {
     );
   }
 
-  Widget _buildLoggedInProfile(BuildContext context, WidgetRef ref) {
+  Widget _buildLoggedInProfile(BuildContext context, WidgetRef ref, AuthState authState) {
+    final userStats = ref.watch(userStatsProvider);
+    final initials = authState.displayName.isNotEmpty
+        ? authState.displayName.substring(0, 2).toUpperCase()
+        : 'U';
+
     return CustomScrollView(
       slivers: [
         // Header avec avatar et stats
@@ -123,17 +129,25 @@ class ProfilePage extends ConsumerWidget {
                             offset: const Offset(0, 8),
                           ),
                         ],
+                        image: authState.avatarUrl != null
+                            ? DecorationImage(
+                                image: NetworkImage(authState.avatarUrl!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
                       ),
-                      child: const Center(
-                        child: Text(
-                          'JD',
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                      child: authState.avatarUrl == null
+                          ? Center(
+                              child: Text(
+                                initials,
+                                style: const TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          : null,
                     ),
                     Positioned(
                       bottom: 0,
@@ -148,9 +162,9 @@ class ProfilePage extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.white, width: 2),
                         ),
-                        child: const Text(
-                          'Niv. 3',
-                          style: TextStyle(
+                        child: Text(
+                          'Niv. ${authState.level}',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -164,11 +178,11 @@ class ProfilePage extends ConsumerWidget {
                 
                 // Nom
                 Text(
-                  'John Doe',
+                  authState.displayName,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Text(
-                  'john.doe@email.com',
+                  authState.user?.email ?? '',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppTheme.textSecondary,
                   ),
@@ -177,28 +191,32 @@ class ProfilePage extends ConsumerWidget {
                 const SizedBox(height: 24),
                 
                 // Statistiques
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _StatItem(
-                      value: '320',
-                      label: 'Points',
-                      icon: Icons.emoji_events,
-                      color: Colors.amber,
-                    ),
-                    _StatItem(
-                      value: '42',
-                      label: 'Prix ajoutés',
-                      icon: Icons.price_change,
-                      color: AppTheme.priceGreen,
-                    ),
-                    _StatItem(
-                      value: '#156',
-                      label: 'Classement',
-                      icon: Icons.leaderboard,
-                      color: AppTheme.secondaryColor,
-                    ),
-                  ],
+                userStats.when(
+                  loading: () => const CircularProgressIndicator(),
+                  error: (_, __) => const SizedBox.shrink(),
+                  data: (stats) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _StatItem(
+                        value: '${stats['points'] ?? 0}',
+                        label: 'Points',
+                        icon: Icons.emoji_events,
+                        color: Colors.amber,
+                      ),
+                      _StatItem(
+                        value: '${stats['price_reports_count'] ?? 0}',
+                        label: 'Prix ajoutés',
+                        icon: Icons.price_change,
+                        color: AppTheme.priceGreen,
+                      ),
+                      _StatItem(
+                        value: '${stats['votes_count'] ?? 0}',
+                        label: 'Votes',
+                        icon: Icons.thumb_up,
+                        color: AppTheme.secondaryColor,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -341,10 +359,43 @@ class ProfilePage extends ConsumerWidget {
                 title: 'À propos',
                 onTap: () {},
               ),
+              const Divider(height: 1),
+              _SettingsTile(
+                icon: Icons.logout,
+                title: 'Déconnexion',
+                onTap: () => _showLogoutDialog(context, ref),
+                isDestructive: true,
+              ),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Déconnexion'),
+        content: const Text('Voulez-vous vraiment vous déconnecter ?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await ref.read(authProvider.notifier).signOut();
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppTheme.priceRed,
+            ),
+            child: const Text('Déconnexion'),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -472,21 +523,32 @@ class _SettingsTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final VoidCallback onTap;
+  final bool isDestructive;
 
   const _SettingsTile({
     required this.icon,
     required this.title,
     this.subtitle,
     required this.onTap,
+    this.isDestructive = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final color = isDestructive ? AppTheme.priceRed : AppTheme.textSecondary;
+    
     return ListTile(
-      leading: Icon(icon, color: AppTheme.textSecondary),
-      title: Text(title),
+      leading: Icon(icon, color: color),
+      title: Text(
+        title,
+        style: isDestructive 
+            ? TextStyle(color: AppTheme.priceRed) 
+            : null,
+      ),
       subtitle: subtitle != null ? Text(subtitle!) : null,
-      trailing: const Icon(Icons.chevron_right, color: AppTheme.textMuted),
+      trailing: isDestructive 
+          ? null 
+          : const Icon(Icons.chevron_right, color: AppTheme.textMuted),
       onTap: onTap,
     );
   }

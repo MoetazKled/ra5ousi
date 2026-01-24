@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/theme_config.dart';
+import '../providers/auth_provider.dart';
 
 /// Page de connexion.
 /// 
@@ -19,7 +20,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _isLoading = false;
   bool _obscurePassword = true;
 
   @override
@@ -31,6 +31,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+    final isLoading = authState.isLoading;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -149,8 +152,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: _isLoading ? null : _login,
-                    child: _isLoading
+                    onPressed: isLoading ? null : _login,
+                    child: isLoading
                         ? const SizedBox(
                             width: 24,
                             height: 24,
@@ -186,9 +189,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () {
-                      // TODO: Connexion Google
-                    },
+                    onPressed: _signInWithGoogle,
                     icon: Image.network(
                       'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
                       width: 24,
@@ -211,9 +212,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       TextButton(
-                        onPressed: () {
-                          // TODO: Navigation vers inscription
-                        },
+                        onPressed: () => context.go('/register'),
                         child: const Text('S\'inscrire'),
                       ),
                     ],
@@ -240,32 +239,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() {
-      _isLoading = true;
-    });
+    final success = await ref.read(authProvider.notifier).signInWithEmail(
+      _emailController.text.trim(),
+      _passwordController.text,
+    );
 
-    try {
-      // TODO: Implémenter la connexion Supabase
-      await Future.delayed(const Duration(seconds: 2));
-      
-      if (mounted) {
-        context.go('/explore');
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Erreur: $e'),
-            backgroundColor: AppTheme.priceRed,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+    if (success && mounted) {
+      context.go('/explore');
+    } else if (mounted) {
+      final error = ref.read(authProvider).error;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error ?? 'Erreur de connexion'),
+          backgroundColor: AppTheme.priceRed,
+        ),
+      );
     }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    await ref.read(authProvider.notifier).signInWithGoogle();
   }
 }
