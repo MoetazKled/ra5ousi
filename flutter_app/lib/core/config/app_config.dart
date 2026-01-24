@@ -13,16 +13,14 @@ class AppConfig {
   static const String supabaseUrl = 'https://jygnfrvfrbkdvvgeykii.supabase.co';
   
   /// Clé anonyme Supabase pour l'authentification publique.
-  /// Note: Cette clé sera récupérée depuis le dashboard Supabase > Settings > API
-  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5Z25mcnZmcmJrZHZ2Z2V5a2lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc3MjI0MDAsImV4cCI6MjA1MzI5ODQwMH0.placeholder';
+  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5Z25mcnZmcmJrZHZ2Z2V5a2lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyODEyMTcsImV4cCI6MjA4NDg1NzIxN30.xmoC2KwfsmViP2iqQ6msEa9DZhhBT8U5hkW4bOZ3nyw';
 
   // ============================================================================
   // GOOGLE MAPS
   // ============================================================================
   
   /// Clé API Google Maps.
-  /// À configurer dans la Google Cloud Console.
-  static const String googleMapsApiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
+  static const String googleMapsApiKey = 'AIzaSyC01IA_Rc0rW8vQOZ_JU8nIK4nDLzD0j_A';
 
   // ============================================================================
   // LOCALISATION PAR DÉFAUT (Tunis, Tunisie)
