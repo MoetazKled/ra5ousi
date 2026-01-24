@@ -1,0 +1,38 @@
+# Configuration de l'analyseur Dart pour PriceMap Tunisia
+
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Désactiver certaines règles strictes pour le développement
+    prefer_const_constructors: false
+    prefer_const_literals_to_create_immutables: false
+    use_key_in_widget_constructors: false
+    avoid_print: false
+    prefer_final_fields: false
+    
+    # Règles activées
+    avoid_empty_else: true
+    avoid_relative_lib_imports: true
+    avoid_returning_null_for_future: true
+    avoid_slow_async_io: true
+    avoid_types_as_parameter_names: true
+    cancel_subscriptions: true
+    close_sinks: true
+    empty_statements: true
+    hash_and_equals: true
+    no_duplicate_case_values: true
+    prefer_void_to_null: true
+    unnecessary_statements: true
+
+analyzer:
+  errors:
+    # Traiter certaines erreurs comme des warnings
+    missing_required_param: warning
+    missing_return: warning
+    todo: ignore
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+    - ".dart_tool/**"
