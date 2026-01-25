@@ -3,6 +3,201 @@ import 'package:flutter/material.dart';
 import '../../../../core/config/theme_config.dart';
 import '../../../../core/models/price_report.dart';
 
+/// Widget liste pour afficher un résultat de prix (version liste verticale).
+/// 
+/// Utilisé dans la page de recherche pour afficher les résultats
+/// sous forme de liste avec options de vote.
+class PriceResultListItem extends StatelessWidget {
+  final PriceReport price;
+  final VoidCallback onTap;
+  final VoidCallback? onVote;
+
+  const PriceResultListItem({
+    super.key,
+    required this.price,
+    required this.onTap,
+    this.onVote,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final priceColor = AppTheme.getPriceColor(price.priceColor ?? 'orange');
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              // Indicateur couleur prix
+              Container(
+                width: 4,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: priceColor,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 14),
+              
+              // Infos produit
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      price.productName ?? 'Produit',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Icon(Icons.store, size: 14, color: AppTheme.textMuted),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            price.vendorName ?? 'Commerce',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppTheme.textSecondary,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Icon(Icons.schedule, size: 12, color: AppTheme.textMuted),
+                        const SizedBox(width: 4),
+                        Text(
+                          price.ageText,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        if (price.distanceMeters != null) ...[
+                          const SizedBox(width: 12),
+                          Icon(Icons.near_me, size: 12, color: AppTheme.textMuted),
+                          const SizedBox(width: 4),
+                          Text(
+                            price.formattedDistance,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
+                        if (price.isVerified) ...[
+                          const SizedBox(width: 8),
+                          Icon(Icons.verified, size: 14, color: AppTheme.accentColor),
+                        ],
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(width: 12),
+              
+              // Prix et actions
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // Prix
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: priceColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: priceColor.withOpacity(0.3)),
+                    ),
+                    child: Text(
+                      price.formattedPriceWithUnit,
+                      style: TextStyle(
+                        color: priceColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  // Votes
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                        onTap: onVote,
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppTheme.priceGreen.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.thumb_up_alt_outlined, size: 14, color: AppTheme.priceGreen),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${price.upvotes}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppTheme.priceGreen,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppTheme.backgroundLight,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.thumb_down_alt_outlined, size: 14, color: AppTheme.textMuted),
+                            const SizedBox(width: 4),
+                            Text(
+                              '${price.downvotes}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppTheme.textMuted,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Carte moderne pour afficher un résultat de prix.
 /// 
 /// Utilisé dans le bottom sheet de résultats après une recherche
