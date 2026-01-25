@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../core/config/theme_config.dart';
 import '../../../../core/models/vendor.dart';
 
-/// Carte compacte pour afficher un commerce dans la liste horizontale.
+/// Carte moderne pour afficher un commerce.
 /// 
-/// Style moderne inspiré d'Airbnb avec image, nom, catégorie et distance.
+/// Utilisé dans le bottom sheet de résultats pour afficher
+/// les commerces à proximité avec leurs informations clés.
 class VendorCardWidget extends StatelessWidget {
   final Vendor vendor;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
 
   const VendorCardWidget({
     super.key,
     required this.vendor,
-    this.onTap,
+    required this.onTap,
   });
 
   @override
@@ -25,59 +25,91 @@ class VendorCardWidget extends StatelessWidget {
         width: 200,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: AppTheme.cardShadow,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image
-            SizedBox(
-              height: 80,
-              width: double.infinity,
+            // Header avec image/icône
+            Container(
+              height: 70,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    _getCategoryColor(vendor.categoryId).withOpacity(0.15),
+                    _getCategoryColor(vendor.categoryId).withOpacity(0.05),
+                  ],
+                ),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+              ),
               child: Stack(
-                fit: StackFit.expand,
                 children: [
-                  // Image de fond
-                  vendor.primaryPhoto != null
-                      ? CachedNetworkImage(
-                          imageUrl: vendor.primaryPhoto!,
-                          fit: BoxFit.cover,
-                          placeholder: (_, __) => _buildPlaceholder(),
-                          errorWidget: (_, __, ___) => _buildPlaceholder(),
-                        )
-                      : _buildPlaceholder(),
-                  
+                  Center(
+                    child: Icon(
+                      _getCategoryIcon(vendor.categoryId),
+                      size: 32,
+                      color: _getCategoryColor(vendor.categoryId).withOpacity(0.5),
+                    ),
+                  ),
                   // Badge vérifié
                   if (vendor.isVerified)
                     Positioned(
-                      top: 8,
-                      right: 8,
+                      top: 10,
+                      right: 10,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: AppTheme.accentColor,
-                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppTheme.accentColor.withOpacity(0.3),
+                              blurRadius: 6,
+                            ),
+                          ],
                         ),
-                        child: const Row(
+                        child: const Icon(
+                          Icons.verified,
+                          size: 14,
+                          color: AppTheme.accentColor,
+                        ),
+                      ),
+                    ),
+                  // Badge nombre de prix
+                  if (vendor.priceReportCount > 0)
+                    Positioned(
+                      bottom: 10,
+                      left: 10,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppTheme.priceGreen,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.verified,
+                            const Icon(
+                              Icons.local_offer,
                               size: 12,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 2),
+                            const SizedBox(width: 4),
                             Text(
-                              'Vérifié',
-                              style: TextStyle(
+                              '${vendor.priceReportCount}',
+                              style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
@@ -98,55 +130,56 @@ class VendorCardWidget extends StatelessWidget {
                     // Nom
                     Text(
                       vendor.name,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     
                     // Catégorie
-                    if (vendor.categoryName != null)
-                      Text(
-                        vendor.categoryName!,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppTheme.textSecondary,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    Text(
+                      vendor.categoryName ?? 'Commerce',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: _getCategoryColor(vendor.categoryId),
+                        fontWeight: FontWeight.w500,
                       ),
+                      maxLines: 1,
+                    ),
                     
                     const Spacer(),
                     
-                    // Footer avec distance et note
+                    // Infos bas
                     Row(
                       children: [
                         if (vendor.distanceMeters != null) ...[
-                          const Icon(
+                          Icon(
                             Icons.near_me,
-                            size: 14,
+                            size: 12,
                             color: AppTheme.textMuted,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             vendor.formattedDistance,
-                            style: Theme.of(context).textTheme.labelSmall,
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: AppTheme.textSecondary,
+                            ),
                           ),
                         ],
                         const Spacer(),
-                        if (vendor.ratingAvg > 0) ...[
-                          const Icon(
-                            Icons.star_rounded,
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward,
                             size: 14,
-                            color: Colors.amber,
+                            color: AppTheme.primaryColor,
                           ),
-                          const SizedBox(width: 2),
-                          Text(
-                            vendor.ratingAvg.toStringAsFixed(1),
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
+                        ),
                       ],
                     ),
                   ],
@@ -159,196 +192,48 @@ class VendorCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceholder() {
-    return Container(
-      color: AppTheme.backgroundLight,
-      child: const Center(
-        child: Icon(
-          Icons.store_rounded,
-          size: 32,
-          color: AppTheme.textMuted,
-        ),
-      ),
-    );
-  }
-}
-
-/// Version plus grande de la carte commerce.
-class VendorCardLargeWidget extends StatelessWidget {
-  final Vendor vendor;
-  final VoidCallback? onTap;
-
-  const VendorCardLargeWidget({
-    super.key,
-    required this.vendor,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: AppTheme.cardShadow,
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Row(
-          children: [
-            // Image
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  vendor.primaryPhoto != null
-                      ? CachedNetworkImage(
-                          imageUrl: vendor.primaryPhoto!,
-                          fit: BoxFit.cover,
-                          placeholder: (_, __) => _buildPlaceholder(),
-                          errorWidget: (_, __, ___) => _buildPlaceholder(),
-                        )
-                      : _buildPlaceholder(),
-                  
-                  if (vendor.isVerified)
-                    Positioned(
-                      top: 8,
-                      left: 8,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          color: AppTheme.accentColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.verified,
-                          size: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            
-            // Contenu
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      vendor.name,
-                      style: Theme.of(context).textTheme.titleSmall,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    
-                    if (vendor.categoryName != null)
-                      Text(
-                        vendor.categoryName!,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppTheme.textSecondary,
-                        ),
-                      ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    Row(
-                      children: [
-                        if (vendor.distanceMeters != null) ...[
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppTheme.backgroundLight,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.near_me,
-                                  size: 12,
-                                  color: AppTheme.textMuted,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  vendor.formattedDistance,
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                        const SizedBox(width: 8),
-                        if (vendor.ratingAvg > 0)
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.amber.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.star_rounded,
-                                  size: 12,
-                                  color: Colors.amber,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  vendor.ratingAvg.toStringAsFixed(1),
-                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            
-            // Chevron
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Icon(
-                Icons.chevron_right_rounded,
-                color: AppTheme.textMuted,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  /// Retourne l'icône pour une catégorie.
+  IconData _getCategoryIcon(String? categoryId) {
+    // Mapper basé sur les ID standards ou utiliser une icône par défaut
+    switch (categoryId) {
+      case '22222222-0000-0000-0000-000000000002': // Boucherie
+        return Icons.restaurant;
+      case '22222222-0000-0000-0000-000000000005': // Boulangerie
+        return Icons.bakery_dining;
+      case '22222222-0000-0000-0000-000000000004': // Épicerie
+        return Icons.shopping_basket;
+      case '22222222-0000-0000-0000-000000000006': // Primeur
+        return Icons.eco;
+      case '22222222-0000-0000-0000-000000000011': // Coiffeur
+        return Icons.content_cut;
+      case '22222222-0000-0000-0000-000000000021': // Quincaillerie
+        return Icons.hardware;
+      case '22222222-0000-0000-0000-000000000031': // Pharmacie
+        return Icons.local_pharmacy;
+      default:
+        return Icons.store;
+    }
   }
 
-  Widget _buildPlaceholder() {
-    return Container(
-      color: AppTheme.backgroundLight,
-      child: const Center(
-        child: Icon(
-          Icons.store_rounded,
-          size: 32,
-          color: AppTheme.textMuted,
-        ),
-      ),
-    );
+  /// Retourne la couleur pour une catégorie.
+  Color _getCategoryColor(String? categoryId) {
+    switch (categoryId) {
+      case '22222222-0000-0000-0000-000000000002': // Boucherie
+        return AppTheme.primaryColor;
+      case '22222222-0000-0000-0000-000000000005': // Boulangerie
+        return const Color(0xFFD97706);
+      case '22222222-0000-0000-0000-000000000004': // Épicerie
+        return AppTheme.secondaryColor;
+      case '22222222-0000-0000-0000-000000000006': // Primeur
+        return AppTheme.priceGreen;
+      case '22222222-0000-0000-0000-000000000011': // Coiffeur
+        return const Color(0xFF8B5CF6);
+      case '22222222-0000-0000-0000-000000000021': // Quincaillerie
+        return const Color(0xFF78716C);
+      case '22222222-0000-0000-0000-000000000031': // Pharmacie
+        return const Color(0xFF059669);
+      default:
+        return AppTheme.secondaryColor;
+    }
   }
 }

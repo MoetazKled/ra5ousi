@@ -63,9 +63,9 @@ class _SplashPageState extends ConsumerState<SplashPage>
     final locationService = ref.read(locationServiceProvider.notifier);
     await locationService.checkAndRequestPermission();
 
-    // Naviguer vers la carte
+    // Naviguer vers l'accueil
     if (mounted) {
-      context.go('/explore');
+      context.go('/home');
     }
   }
 

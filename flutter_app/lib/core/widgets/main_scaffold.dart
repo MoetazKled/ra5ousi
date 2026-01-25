@@ -89,25 +89,25 @@ class _BottomNavBar extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _NavItem(
-                icon: Icons.explore_outlined,
-                activeIcon: Icons.explore,
-                label: 'Explorer',
+                icon: Icons.home_outlined,
+                activeIcon: Icons.home,
+                label: 'Accueil',
                 isSelected: selectedIndex == 0,
-                onTap: () => context.go('/explore'),
+                onTap: () => context.go('/home'),
               ),
               _NavItem(
-                icon: Icons.search_outlined,
-                activeIcon: Icons.search,
-                label: 'Rechercher',
+                icon: Icons.map_outlined,
+                activeIcon: Icons.map,
+                label: 'Carte',
                 isSelected: selectedIndex == 1,
-                onTap: () => context.go('/search'),
+                onTap: () => context.go('/explore'),
               ),
               // Espace pour le FAB central
               const SizedBox(width: 56),
               _NavItem(
                 icon: Icons.emoji_events_outlined,
                 activeIcon: Icons.emoji_events,
-                label: 'Classement',
+                label: 'Contribuer',
                 isSelected: selectedIndex == 2,
                 onTap: () => context.go('/contribute'),
               ),
@@ -126,8 +126,8 @@ class _BottomNavBar extends ConsumerWidget {
   }
 
   int _getIndexFromPath(String path) {
-    if (path.startsWith('/explore')) return 0;
-    if (path.startsWith('/search')) return 1;
+    if (path.startsWith('/home')) return 0;
+    if (path.startsWith('/explore')) return 1;
     if (path.startsWith('/contribute')) return 2;
     if (path.startsWith('/profile')) return 3;
     return 0;

@@ -45,6 +45,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return MainScaffold(child: child);
         },
         routes: [
+          // Onglet Accueil
+          GoRoute(
+            path: '/home',
+            name: 'home',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const HomePage(),
+              transitionsBuilder: _fadeTransition,
+            ),
+          ),
+          
           // Onglet Explorer (Carte)
           GoRoute(
             path: '/explore',
@@ -52,28 +63,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             pageBuilder: (context, state) => CustomTransitionPage(
               key: state.pageKey,
               child: const MapPage(),
-              transitionsBuilder: _fadeTransition,
-            ),
-            routes: [
-              // Détail d'un commerce
-              GoRoute(
-                path: 'vendor/:vendorId',
-                name: 'vendor-detail',
-                builder: (context, state) {
-                  final vendorId = state.pathParameters['vendorId']!;
-                  return VendorDetailPage(vendorId: vendorId);
-                },
-              ),
-            ],
-          ),
-          
-          // Onglet Recherche
-          GoRoute(
-            path: '/search',
-            name: 'search',
-            pageBuilder: (context, state) => CustomTransitionPage(
-              key: state.pageKey,
-              child: const SearchPage(),
               transitionsBuilder: _fadeTransition,
             ),
           ),
@@ -100,6 +89,23 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      
+      // Routes hors shell (pages pleines)
+      GoRoute(
+        path: '/vendor/:vendorId',
+        name: 'vendor-detail',
+        builder: (context, state) {
+          final vendorId = state.pathParameters['vendorId']!;
+          return VendorDetailPage(vendorId: vendorId);
+        },
+      ),
+      
+      // Onglet Recherche (page pleine)
+      GoRoute(
+        path: '/search',
+        name: 'search',
+        builder: (context, state) => const SearchPage(),
       ),
     ],
     
