@@ -10,10 +10,10 @@ class AppConfig {
   // ============================================================================
   
   /// URL du projet Supabase.
-  static const String supabaseUrl = 'https://jygnfrvfrbkdvvgeykii.supabase.co';
+  static const String supabaseUrl = 'https://pulyalgmlajndbrayxgq.supabase.co';
   
   /// Clé anonyme Supabase pour l'authentification publique.
-  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5Z25mcnZmcmJrZHZ2Z2V5a2lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyODEyMTcsImV4cCI6MjA4NDg1NzIxN30.xmoC2KwfsmViP2iqQ6msEa9DZhhBT8U5hkW4bOZ3nyw';
+  static const String supabaseAnonKey = 'sb_publishable_AXol2ReDQDccU6Ke9iQuQQ_ZBYmRL7j';
 
   // ============================================================================
   // GOOGLE MAPS

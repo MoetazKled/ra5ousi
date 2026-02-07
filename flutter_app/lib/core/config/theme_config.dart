@@ -87,7 +87,7 @@ class AppTheme {
       ),
       
       // Cards
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: surfaceLight,
         surfaceTintColor: Colors.transparent,
@@ -276,7 +276,7 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
       ),
       
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: surfaceDark,
         surfaceTintColor: Colors.transparent,
